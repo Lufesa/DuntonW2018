@@ -1,0 +1,60 @@
+/***** Écrit lundi 11 décembre 2017 *****/
+
+#include"Servo.h"
+int echo = 1;
+int trig = 2;
+
+double duration;
+int distance; //en cm
+
+Servo leftServo;
+Servo rightServo;
+int leftServoPin = 9;
+int rightServoPin = 10;
+
+void setup() {
+  pinMode(trig, OUTPUT);
+  pinMode(echo,INPUT);
+  Serial.begin(9600);
+  leftServo.attach(leftServoPin);
+  rightServo.attach(rightServoPin);
+}
+
+void loop() {
+  digitalWrite(trig,LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig,LOW);
+  duration = pulseIn(echo,HIGH);
+  distance = duration*0.017;
+  Serial.print("Distance :"); 
+  Serial.print(distance); 
+  Serial.println( "cm");
+  delay(50);
+  
+  while(distance >= 10) {
+    rightServo.write(180);
+    leftServo.write(180);   
+    digitalWrite(trig,LOW);
+    delayMicroseconds(2);
+    digitalWrite(trig,HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trig,LOW);
+    duration = pulseIn(echo,HIGH);
+    distance = duration*0.017;
+    Serial.print("Distance :"); 
+    Serial.print(distance); 
+    Serial.println( "cm");
+    delay(50);
+  }
+  rightServo.write(90);
+  leftServo.write(90);
+  delay(10);
+  rightServo.write(180);
+  leftServo.write(0);
+  delay(200);
+  rightServo.write(90);
+  leftServo.write(90);
+}
+
