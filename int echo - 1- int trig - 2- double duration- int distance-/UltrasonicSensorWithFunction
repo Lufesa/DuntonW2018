@@ -1,0 +1,32 @@
+int echo = 1;
+int trig = 2;
+double duration;
+int distance; //en cm
+void setup() {
+  pinMode(trig, OUTPUT);
+  pinMode(echo,INPUT);
+  Serial.begin(9600);
+}
+void loop() {
+  distance = see();
+  Serial.print("Distance dans loop :"); 
+  Serial.print(distance); 
+  Serial.println( "cm");
+}
+
+
+int see () {
+  long duration2;
+  int distance2;
+  digitalWrite(trig,LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig,LOW);
+  duration2 = pulseIn(echo,HIGH);
+  distance2 = duration2*0.017;
+  Serial.print("Distance dans la fonction :"); 
+  Serial.print(distance2); 
+  Serial.println( "cm");
+  return (distance2);
+}
