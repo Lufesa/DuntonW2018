@@ -8,25 +8,23 @@ void setup() {
   Serial.begin(9600);
 }
 void loop() {
-  distance = see();
+  distance = see( trig, echo);
   Serial.print("Distance dans loop :"); 
   Serial.print(distance); 
   Serial.println( "cm");
 }
-
-
-int see () {
+int see (int trigPin, int echoPin) {
   long duration2;
   int distance2;
-  digitalWrite(trig,LOW);
+  digitalWrite(trigPin,LOW);
   delayMicroseconds(2);
-  digitalWrite(trig,HIGH);
+  digitalWrite(trigPin,HIGH);
   delayMicroseconds(10);
-  digitalWrite(trig,LOW);
-  duration2 = pulseIn(echo,HIGH);
+  digitalWrite(trigPin,LOW);
+  duration2 = pulseIn(echoPin,HIGH);
   distance2 = duration2*0.017;
-  Serial.print("Distance dans la fonction :"); 
-  Serial.print(distance2); 
-  Serial.println( "cm");
+  //Serial.print("Distance dans la fonction :"); 
+  //Serial.print(distance2); 
+  //Serial.println( "cm");
   return (distance2);
 }
